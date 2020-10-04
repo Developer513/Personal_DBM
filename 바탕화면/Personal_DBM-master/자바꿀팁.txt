@@ -1,0 +1,103 @@
+데이터 타입에 상관없이 출력하는 기능
+
+public class Test {
+    public static void main(String[] args) {
+        List<String> list1 = new ArrayList();
+        list1.add("1");
+        list1.add("1");
+        list1.add("1");
+        list1.add("1");
+        method1(list1);
+        method2(list1);
+ 
+        List<Integer> list2 = new ArrayList();
+        list2.add(1);
+        list2.add(1);
+        list2.add(1);
+        list2.add(1);
+        method1(list2);  // 오류
+        method2(list2);
+    }
+ 
+    public static void method1(List<String> list) {
+        System.out.println(list);
+    }
+ 
+    public static void method2(List<?> list) {
+        System.out.println(list);
+    }
+}
+
+
+출처: https://deftkang.tistory.com/63 [deftkang의 IT]
+
+
+
+
+
+method3는 파라미터로 (List<? extends Number>)로 받고있다. 위에서 extends Object로 설명했지만  Object는 자바의 최상위 자료형이기 때문에 자바안에서는 Object를 벗어나지 못한다. 
+
+반면 Number는 Byte, Short, Integer, Long, Float, Double 의 상위클래스이기 때문에 List<? extends Number>는 제네릭이 정수나 실수인것만 받겠다는 것이다. 그래서 제네릭이 String인 method3(list1)은 에러가 뜬다.  
+
+
+public class Test {
+    public static void main(String[] args) {
+        List<String> list1 = new ArrayList();
+        list1.add("1");
+        list1.add("1");
+        list1.add("1");
+        list1.add("1");
+        method1(list1);
+        method2(list1);
+        method3(list1); // 오류
+ 
+        List<Integer> list2 = new ArrayList();
+        list2.add(1);
+        list2.add(1);
+        list2.add(1);
+        list2.add(1);
+        //method1(list2);  // 오류
+        method2(list2);
+        method3(list2);
+    }
+ 
+    public static void method1(List<String> list) {
+        System.out.println(list);
+    }
+ 
+    public static void method2(List<?> list) {
+        System.out.println(list);
+    }
+ 
+    public static void method3(List<? extends Number> list) {
+        System.out.println(list);
+    }
+}
+
+
+###############################################################
+어레이 리스트에 다양한 데이터 타입 받는법
+import java.util.ArrayList;
+import java.util.List;
+
+public class ArrayLst {
+
+    public static void main(String... args)
+    {
+        ArrayList al = new ArrayList();
+
+        al.add("Java4s");
+        al.add(12);
+        al.add(12.54f);
+
+        for(int i=0;i<al.size();i++)
+        {
+            Object o = al.get(i);
+
+            if(o instanceof String || o instanceof Float || o instanceof Integer)
+            System.out.println("Value is "+o.toString());    
+        }
+
+    }
+}
+걍 넣으면 됨 
